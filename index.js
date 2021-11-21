@@ -1,6 +1,8 @@
 // read game.js from week 10 mini project
 // create class called BuildTeam
 // methods within BuildTeam can invoke inquirer/prompts
+// maybe use get methods in Manager, intern and engineer classes to populate the html file correctly
+// construct objects using the imported classes within the inquirer prompts
 
 // import inquirer & fs
 const inquirer = require('inquirer');
@@ -99,6 +101,59 @@ const internQuestions = [
     },
 ]
 
+
+function promptManager() {
+    inquirer
+        .prompt(manangerQuestions)
+        // .then ((answers) => ) Store answers into an array to pull from for the html file
+        .then ((answers) => {
+            if(answers.nextChoice == 'add Engineer') {
+                promptEngineer()
+            } else if (answers.nextChoice == 'add Intern') {
+                promptIntern()
+            } else {
+                quit()
+            }
+        })
+}
+    
+function quit() {
+    console.log('\nFinished making team!\n');
+    process.exit(0);
+}
+
+function promptEngineer() {
+    //console.log(`Adding an engineer next!`);
+    inquirer
+        .prompt(engineerQuestions)
+        .then ((answers) => {
+            if(answers.nextChoice == 'add Engineer') {
+                promptEngineer()
+            } else if (answers.nextChoice == 'add Intern') {
+                promptIntern()
+            } else {
+                quit()
+            }
+        })
+}
+
+function promptIntern() {
+    //console.log(`Adding an intern next!`);
+    inquirer
+        .prompt(internQuestions)
+        .then ((answers) => {
+            if(answers.nextChoice == 'add Engineer') {
+                promptEngineer()
+            } else if (answers.nextChoice == 'add Intern') {
+                promptIntern()
+            } else {
+                quit()
+            }
+        })
+}
+
+promptManager();
+
 // const nextQuestion = [
 //     {
 //         type: 'list',
@@ -108,20 +163,21 @@ const internQuestions = [
 //     },
 // ]
 
-inquirer
-    .prompt(manangerQuestions)
-    .then ((answers) => {
-        if(answers.nextChoice == 'add Engineer') {
-            console.log(`${answers.mgrName} chose to add an Engineer`);
-        } else if(answers.nextChoice == 'add Intern') {
-            console.log(`${answers.mgrName} chose to add an Intern!`);
-        } else {
-            // (answers) => {
-            //     const htmlPageContent = generateHTML(answers);
-            //     fs.writeFile('index.html', htmlPageContent, (err) => 
-            //         err ? console.log(err) : console.log('Successfully generated index.html')
-            //     )
-            // }
-            return
-        }
-    })
+// this code below works
+// inquirer
+//     .prompt(manangerQuestions)
+//     .then ((answers) => {
+//         if(answers.nextChoice == 'add Engineer') {
+//             console.log(`${answers.mgrName} chose to add an Engineer`);
+//         } else if(answers.nextChoice == 'add Intern') {
+//             console.log(`${answers.mgrName} chose to add an Intern!`);
+//         } else {
+//             // (answers) => {
+//             //     const htmlPageContent = generateHTML(answers);
+//             //     fs.writeFile('index.html', htmlPageContent, (err) => 
+//             //         err ? console.log(err) : console.log('Successfully generated index.html')
+//             //     )
+//             // }
+//             return
+//         }
+//     })
