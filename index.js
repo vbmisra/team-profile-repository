@@ -1,3 +1,7 @@
+// read game.js from week 10 mini project
+// create class called BuildTeam
+// methods within BuildTeam can invoke inquirer/prompts
+
 // import inquirer & fs
 const inquirer = require('inquirer');
 const fs = require('fs');
