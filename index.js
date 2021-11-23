@@ -101,38 +101,91 @@ const internQuestions = [
     },
 ]
 
+// html templates
+const htmlHead = 
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title> Team </title>
+</head>
+<body>`
+
+const htmlEnd = 
+`</body>
+</html>`
+
+const engineerHTML = 
+`<div class="card" style="width: 18rem;">
+<div class="card-body">
+  <h5 class="card-title">Card title</h5>
+  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <a href="#" class="card-link">Card link</a>
+  <a href="#" class="card-link">Another link</a>
+</div>
+</div>`
+
+const internHTML = 
+`<div class="card" style="width: 18rem;">
+<div class="card-body">
+  <h5 class="card-title">Card title</h5>
+  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <a href="#" class="card-link">Card link</a>
+  <a href="#" class="card-link">Another link</a>
+</div>
+</div>`
+
+const managerHTML = 
+`<div class="card w-75">
+<div class="card-body">
+  <h5 class="card-title">Card title</h5>
+  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+  <a href="#" class="btn btn-primary">Button</a>
+</div>
+</div>`
+
+//empty arrays
+let teamData = []
+let htmlText = []
 
 function promptManager() {
     inquirer
         .prompt(manangerQuestions)
         // .then ((answers) => ) Store answers into an array to pull from for the html file
-        .then ((answers) => {
+        .then(answers => {
+            const manager = new Manager(answers.mgrName, answers.mgrID, answers.mgrEmail, answers.mgrPhone)
+            console.log(manager)
+            teamData.push(manager)
+            console.log(teamData)
             if(answers.nextChoice == 'add Engineer') {
                 promptEngineer()
             } else if (answers.nextChoice == 'add Intern') {
                 promptIntern()
             } else {
-                quit()
+                end()
             }
         })
-}
-    
-function quit() {
-    console.log('\nFinished making team!\n');
-    process.exit(0);
 }
 
 function promptEngineer() {
     //console.log(`Adding an engineer next!`);
     inquirer
         .prompt(engineerQuestions)
-        .then ((answers) => {
+        .then (answers => {
+            const engineer = new Engineer(answers.engName, answers.engID, answers.engEmail, answers.engGithub)
+            teamData.push(engineer)
+            console.log(teamData)
             if(answers.nextChoice == 'add Engineer') {
                 promptEngineer()
             } else if (answers.nextChoice == 'add Intern') {
                 promptIntern()
             } else {
-                quit()
+                end()
             }
         })
 }
@@ -141,16 +194,33 @@ function promptIntern() {
     //console.log(`Adding an intern next!`);
     inquirer
         .prompt(internQuestions)
-        .then ((answers) => {
+        .then (answers => {
+            const intern = new Intern(answers.intName, answers.intID, answers.intEmail, answers.intSchool)
+            teamData.push(intern)
+            console.log(teamData)
             if(answers.nextChoice == 'add Engineer') {
                 promptEngineer()
             } else if (answers.nextChoice == 'add Intern') {
                 promptIntern()
             } else {
-                quit()
+                end()
             }
         })
 }
+
+function end() {
+    //function to generate team html file
+    //teamData[1].constructor.name gets the title of the object (i.e. Engineer)
+    //teamData.length counts each object as 1 for length of array
+    //teamData[1].name to get the name element of 2nd object in array
+    console.log('\nFinished making team!\n');
+    process.exit(0);
+}
+
+function generateMgrHTML() {
+    
+}
+
 
 promptManager();
 
@@ -163,21 +233,3 @@ promptManager();
 //     },
 // ]
 
-// this code below works
-// inquirer
-//     .prompt(manangerQuestions)
-//     .then ((answers) => {
-//         if(answers.nextChoice == 'add Engineer') {
-//             console.log(`${answers.mgrName} chose to add an Engineer`);
-//         } else if(answers.nextChoice == 'add Intern') {
-//             console.log(`${answers.mgrName} chose to add an Intern!`);
-//         } else {
-//             // (answers) => {
-//             //     const htmlPageContent = generateHTML(answers);
-//             //     fs.writeFile('index.html', htmlPageContent, (err) => 
-//             //         err ? console.log(err) : console.log('Successfully generated index.html')
-//             //     )
-//             // }
-//             return
-//         }
-//     })
