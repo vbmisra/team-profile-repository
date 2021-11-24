@@ -18,6 +18,7 @@ Downloaded from the github repository
 2. Run downloaded file in your command line.
 
 Attached is a video showing usage and tests:
+https://watch.screencastify.com/v/Ra0CeVKf5iZqvh76WsO7
 
 
 ## Contributing
