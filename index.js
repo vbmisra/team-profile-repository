@@ -56,7 +56,7 @@ const engineerQuestions = [
     },
     {
         type: 'input',
-        message: "Enter manager's email address: ",
+        message: "Enter Engineer's email address: ",
         name: 'engEmail',
     },
     {
@@ -115,39 +115,39 @@ const htmlHead =
 <body>`
 
 const htmlEnd = 
-`</body>
+`\n</body>
 </html>`
 
 const engineerHTML = 
 `<div class="card" style="width: 18rem;">
 <div class="card-body">
-  <h5 class="card-title">Card title</h5>
-  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  <a href="#" class="card-link">Card link</a>
-  <a href="#" class="card-link">Another link</a>
+  <h5 class="card-title">Engineer</h5>
+  <p class="card-text">Name: </p>
+  <p class="card-text">ID: </p>
+  <p class="card-text">Email: </p>
+  <p class="card-text">Github: </p>
 </div>
 </div>`
 
 const internHTML = 
 `<div class="card" style="width: 18rem;">
 <div class="card-body">
-  <h5 class="card-title">Card title</h5>
-  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  <a href="#" class="card-link">Card link</a>
-  <a href="#" class="card-link">Another link</a>
+  <h5 class="card-title">Intern</h5>
+  <p class="card-text">Name: </p>
+  <p class="card-text">ID: </p>
+  <p class="card-text">Email: </p>
+  <p class="card-text">School: </p>
 </div>
 </div>`
 
-const managerHTML = 
-`<div class="card w-75">
-<div class="card-body">
-  <h5 class="card-title">Card title</h5>
-  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-  <a href="#" class="btn btn-primary">Button</a>
-</div>
-</div>`
+// const managerHTML = 
+// `<div class="card w-75">
+// <div class="card-body">
+//   <h5 class="card-title">Card title</h5>
+//   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+//   <a href="#" class="btn btn-primary">Button</a>
+// </div>
+// </div>`
 
 //empty arrays
 let teamData = []
@@ -213,23 +213,99 @@ function end() {
     //teamData[1].constructor.name gets the title of the object (i.e. Engineer)
     //teamData.length counts each object as 1 for length of array
     //teamData[1].name to get the name element of 2nd object in array
+    generateMgrHTML()
+    generateEngHTML()
+    generateIntHTML()
+    console.log(htmlText)
+    writeHTMLFile()
+    // writeHTMLBody()
+    // writeHTMLEnd()
     console.log('\nFinished making team!\n');
     process.exit(0);
 }
 
 function generateMgrHTML() {
-    
+    for(let i = 0; i < teamData.length; i++) {
+        if(teamData[i].constructor.name == 'Manager') {
+            htmlText.push(`
+            <div class="card w-75">
+            <div class="card-body">
+              <h5 class="card-title">Manager</h5>
+              <p class="card-text">Name: ${teamData[i].name}</p>
+              <p class="card-text">ID: ${teamData[i].id}</p>
+              <p class="card-text">Email: ${teamData[i].email}</p>
+              <p class="card-text">Phone: ${teamData[i].officeNumber}</p>
+            </div>
+            </div>`)
+        }
+    }
 }
+
+function generateEngHTML() {
+    for(let i = 0; i < teamData.length; i++) {
+        if(teamData[i].constructor.name == 'Engineer') {
+            htmlText.push(`
+            <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Engineer</h5>
+              <p class="card-text">Name: ${teamData[i].name}</p>
+              <p class="card-text">ID: ${teamData[i].id}</p>
+              <p class="card-text">Email: ${teamData[i].email}</p>
+              <p class="card-text">Github: ${teamData[i].github}</p>
+            </div>
+            </div>`)
+        }
+    }
+}
+
+function generateIntHTML() {
+    for (let i = 0; i < teamData.length; i++) {
+        if (teamData[i].constructor.name == 'Intern') {
+            htmlText.push(`
+            <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Intern</h5>
+              <p class="card-text">Name: ${teamData[i].name}</p>
+              <p class="card-text">ID: ${teamData[i].id}</p>
+              <p class="card-text">Email: ${teamData[i].email}</p>
+              <p class="card-text">School: ${teamData[i].school}</p>
+            </div>
+            </div>`)
+        }
+    }
+}
+
+function writeHTMLFile() {
+    fs.writeFileSync('./src/index.html', htmlHead)
+    for (let i = 0; i < htmlText.length; i++) {
+        fs.appendFileSync('./src/index.html', htmlText[i], function(err) {
+            if (err) throw err
+            console.log('File Written!')
+        })
+    }
+    fs.appendFileSync('./src/index.html', htmlEnd, function(err) {
+        if (err) throw err
+        console.log('File Written!')
+    })
+    // .catch (err) => console.error(err);
+}
+
+// function writeHTMLBody() {
+//     for (let i = 0; i < htmlText.length; i++) {
+//         fs.appendFileSync('./src/index.html', htmlText[i], function(err) {
+//             if (err) throw err
+//             console.log('File Written!')
+//         })
+//     }
+// }
+
+// function writeHTMLEnd() {
+//     fs.appendFileSync('./src/index.html', htmlEnd, function(err) {
+//         if (err) throw err
+//         console.log('File Written!')
+//     })
+// }
 
 
 promptManager();
-
-// const nextQuestion = [
-//     {
-//         type: 'list',
-//         message: "What would you like to do next?",
-//         choices: ['add Engineer', 'add Intern', 'finish building team'],
-//         name: 'nextChoice'
-//     },
-// ]
 

@@ -23,5 +23,12 @@
   "homepage": "https://github.com/vbmisra/team-profile-repository#readme",
   "dependencies": {
     "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
+
